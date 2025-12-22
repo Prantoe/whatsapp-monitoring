@@ -1,4 +1,22 @@
 {
   "name": "whatsapp-monitor",
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@4.6.0",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "ts-node src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "dependencies": {
+    "puppeteer": "23",
+    "qrcode": "^1.5.4",
+    "whatsapp-web.js": "https://github.com/pedroslopez/whatsapp-web.js.git#main",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@types/ws": "^8.18.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
 }
