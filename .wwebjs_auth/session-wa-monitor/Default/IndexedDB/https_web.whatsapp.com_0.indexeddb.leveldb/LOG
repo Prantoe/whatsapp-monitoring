@@ -1,0 +1,18 @@
+2026/01/27-11:20:31.425 167b32 Reusing MANIFEST /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/01/27-11:20:31.425 167b32 Recovering log #203
+2026/01/27-11:20:31.431 167b32 Reusing old log /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000203.log 
+2026/01/27-11:24:35.047 167b3f Level-0 table #211: started
+2026/01/27-11:24:35.082 167b3f Level-0 table #211: 1256922 bytes OK
+2026/01/27-11:24:35.086 167b3f Delete type=0 #203
+2026/01/27-11:24:35.693 167b3f Compacting 1@1 + 4@2 files
+2026/01/27-11:24:35.772 167b3f Generated table #212@1: 85530 keys, 2236660 bytes
+2026/01/27-11:24:35.807 167b3f Generated table #213@1: 81146 keys, 2293698 bytes
+2026/01/27-11:24:35.833 167b3f Generated table #214@1: 25503 keys, 2180033 bytes
+2026/01/27-11:24:35.848 167b3f Generated table #215@1: 32744 keys, 762111 bytes
+2026/01/27-11:24:35.848 167b3f Compacted 1@1 + 4@2 files => 7472502 bytes
+2026/01/27-11:24:35.850 167b3f compacted to: files[ 0 0 4 0 0 0 0 ]
+2026/01/27-11:24:35.850 167b3f Delete type=2 #205
+2026/01/27-11:24:35.850 167b3f Delete type=2 #211
+2026/01/27-11:24:35.850 167b3f Delete type=2 #206
+2026/01/27-11:24:35.850 167b3f Delete type=2 #207
+2026/01/27-11:24:35.850 167b3f Delete type=2 #208

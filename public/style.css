@@ -16,6 +16,7 @@ body {
     white-space: nowrap;
     justify-content: space-between;
     padding: 0 10px;
+    margin-top: -20px;
 }
 
 .header .logo {
@@ -622,11 +623,11 @@ a.btn:focus-visible {
 
 /* Unread highlight */
 .msg.unread .msg__bubble {
-    box-shadow: 0 0 0 1px rgba(96,165,250,.35), 0 0 0 3px rgba(59,130,246,.12) inset;
-  }
-  
-  /* Sticky bar per column */
-  .col-sticky {
+    box-shadow: 0 0 0 1px rgba(96, 165, 250, .35), 0 0 0 3px rgba(59, 130, 246, .12) inset;
+}
+
+/* Sticky bar per column */
+.col-sticky {
     position: absolute;
     left: 12px;
     right: 12px;
@@ -634,16 +635,74 @@ a.btn:focus-visible {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: rgba(15,22,41, .96);
+    background: rgba(15, 22, 41, .96);
     border: 1px solid #283149;
     border-radius: 10px;
     padding: 8px 10px;
     z-index: 5;
+}
+
+.col-sticky.hidden {
+    display: none;
+}
+
+.col-sticky .stat {
+    opacity: .9;
+    font-size: 12px;
+}
+
+/* beri ruang konten agar tidak ketutup sticky */
+.colcard .list {
+    padding-bottom: 64px;
+}
+
+.colcard.alert {
+    border: 2px solid #ef4444;
+}
+
+.sla-alert {
+    margin-top: 6px;
+    color: #ef4444;
+    font-weight: 600;
+    font-size: 12px;
+}
+#broadcast {
+    color: white !important;
+    background-color: #058c00;
+}
+
+.btn-broadcast {
+    appearance: none;
+    border: 1px solid #33406e;
+    background: transparent;
+    color: #9cdcfe;
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-broadcast:hover {
+    filter: brightness(1.1);
+}
+
+/* kolom SLA */
+.colcard.sla-alert {
+    border: 2px solid #ef4444;
+    background: rgba(239, 68, 68, 0.05);
   }
   
-  .col-sticky.hidden { display: none; }
-  .col-sticky .stat { opacity: .9; font-size: 12px; }
+  /* sticky SLA */
+  .col-sticky.sla {
+    background: #fee2e2;
+    color: #991b1b;
+    font-weight: 600;
+    justify-content: center;
+  }
   
-  /* beri ruang konten agar tidak ketutup sticky */
-  .colcard .list { padding-bottom: 64px; }
+  /* matiin unread behavior */
+  .colcard.sla-alert .unread-count,
+  .colcard.sla-alert .mark-read {
+    display: none;
+  }
   

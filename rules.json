@@ -1,0 +1,29 @@
+{
+  "rules": [
+    {
+      "phone": "628118414000",
+      "trigger": "produk",
+      "threshold": 11
+    },
+    {
+      "phone": "628121214017",
+      "trigger": "hi",
+      "threshold": 11
+    },
+    {
+      "phone": "6289652707354",
+      "trigger": "pranto ganteng memang",
+      "threshold": 11
+    },
+    {
+      "phone": "6287743780265",
+      "trigger": "halo bro",
+      "threshold": 11
+    },
+    {
+      "phone": "6287713763012",
+      "trigger": "halo bro war",
+      "threshold": 11
+    }
+  ]
+}

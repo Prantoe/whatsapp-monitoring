@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Rules Manager - 3 Dolphins WhatsApp Monitor</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="./assets/favicon.png" />
+  </head>
+
+  <body>
+    <div class="wrap">
+      <div class="header">
+        <img class="logo" loading="lazy" src="./assets/logo.png" alt="3 Dolphins" />
+        <h1>Rules Manager</h1>
+      </div>
+
+      <!-- Top actions -->
+      <div class="card row">
+        <div class="col">
+          <div class="row" style="gap: 8px; align-items: center;">
+            <button class="btn-broadcast" onclick="location.href='/'">
+              ← Back to Monitor
+            </button>
+
+            <button id="reloadRules" class="btn-broadcast">
+              Reload
+            </button>
+          </div>
+
+        </div>
+
+        <div class="col right-col" style="max-width: 320px;">
+          <div>Status: <span id="apiStatus" class="chip chip--booting">booting</span></div>
+          <div style="margin-top:6px;">Total: <code id="totalRules">0</code></div>
+        </div>
+      </div>
+
+      <!-- Add / Edit -->
+      <div class="card">
+        <div class="toolbar">
+          <h3>Upsert Rule</h3>
+          <div class="actions">
+            <button id="resetForm" class="btn btn-ghost btn-mini">Reset</button>
+          </div>
+        </div>
+
+        <div class="row" style="gap: 10px; flex-wrap: wrap;">
+          <input id="ruleId" type="hidden" />
+
+          <input
+            id="phone"
+            class="search"
+            style="max-width: 260px;"
+            placeholder="Phone (08xx / 62xx)"
+          />
+
+          <input
+            id="trigger"
+            class="search"
+            style="flex: 1; min-width: 220px;"
+            placeholder="Trigger message"
+          />
+
+          <input
+            id="threshold"
+            class="search"
+            style="max-width: 180px;"
+            type="number"
+            min="1"
+            placeholder="Threshold (sec)"
+          />
+
+          <button id="saveRule" class="btn-broadcast">Save</button>
+        </div>
+
+        <div id="formMsg" style="margin-top:10px;"></div>
+      </div>
+
+      <!-- List -->
+      <div class="card">
+        <div class="toolbar">
+          <h3>Rules List</h3>
+          <div class="actions">
+            <input id="q" type="search" class="search" placeholder="Search rules…" />
+          </div>
+        </div>
+
+        <div style="overflow:auto;">
+          <table class="table" style="width:100%; border-collapse: collapse;">
+            <thead>
+              <tr style="text-align:left; opacity:.9;">
+                <th style="padding:10px;">Phone</th>
+                <th style="padding:10px;">Trigger</th>
+                <th style="padding:10px;">Threshold</th>
+                <th style="padding:10px; width: 180px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="rulesTbody">
+              <!-- rows injected -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="emptyState" style="padding: 12px; opacity:.8; display:none;">
+          No rules
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirm Modal (reuse same style) -->
+    <div id="confirmModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+      <div class="modal__backdrop"></div>
+      <div class="modal__dialog">
+        <h4 id="confirmTitle">Konfirmasi</h4>
+        <p id="confirmMsg">Yakin?</p>
+        <div class="modal__actions">
+          <button id="confirmCancel" class="btn btn-ghost btn-mini">Batal</button>
+          <button id="confirmOk" class="btn btn-danger btn-mini">Ya, hapus</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./js/rules.js"></script>
+  </body>
+</html>
