@@ -12,17 +12,17 @@
     },
     {
       "phone": "6289652707354",
-      "trigger": "pranto ganteng memang",
+      "trigger": "pranto soearno",
       "threshold": 11
     },
     {
       "phone": "6287743780265",
-      "trigger": "halo bro",
+      "trigger": "halo coy gausah bales ya oke",
       "threshold": 11
     },
     {
       "phone": "6287713763012",
-      "trigger": "halo bro war",
+      "trigger": "jangan di balas",
       "threshold": 11
     }
   ]

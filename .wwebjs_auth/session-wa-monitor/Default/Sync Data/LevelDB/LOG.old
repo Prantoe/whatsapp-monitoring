@@ -1,3 +1,2 @@
-2026/01/27-10:37:44.144 15f1cb Reusing MANIFEST /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/Sync Data/LevelDB/MANIFEST-000001
-2026/01/27-10:37:44.157 15f1cb Recovering log #3
-2026/01/27-10:37:44.158 15f1cb Reusing old log /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/Sync Data/LevelDB/000003.log 
+2026/01/28-16:12:32.844 2652d9 Creating DB /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/Sync Data/LevelDB since it was missing.
+2026/01/28-16:12:32.878 2652d9 Reusing MANIFEST /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/Sync Data/LevelDB/MANIFEST-000001

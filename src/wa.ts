@@ -16,6 +16,7 @@ import { sendTelegramAlert } from "./telegram";
 import { loadActiveRulesFromStore } from "./activeRules";
 import { RulesStore } from "./rulesStore";
 import { generateTxt, sendTelegramFile } from "./generateFile";
+import { startBroadcastCron } from "./jobs/broadcast.cron";
 
 const { Client, LocalAuth } = wweb as any;
 
@@ -444,6 +445,7 @@ export function createWaManager(broadcast: Broadcast) {
     });
 
     c.on("ready", async () => {
+      startBroadcastCron(startBroadcastNow);
       if (isStale()) return;
       clearRestartTimer();
 

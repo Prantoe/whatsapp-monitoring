@@ -31,7 +31,6 @@ export async function sendTelegramAlert(a: {
     (a.trigger ? `• trigger: ${a.trigger}\n` : "");
 
   const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-  console.log("[telegram] POST", url, "chat_id", CHAT_ID);
 
   try {
     const res = await axios.post(url, {

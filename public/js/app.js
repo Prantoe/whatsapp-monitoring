@@ -90,7 +90,6 @@ ws.onmessage = async (ev) => {
     console.log("[ui] rule_seed", data);
     cols.ensureCol(data.clientId, data.clientLabel, data.clientPhone || "", { seeded: true });
 
-    console.log("[ui] colMap size", cols.colMap.size);
     cols.sortColumns();
     applySearch(columnsEl, searchInput.value || "");
     refreshActionsVisibility();

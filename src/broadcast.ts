@@ -1,7 +1,7 @@
 import { getRules } from "./activeRules";
 import { toLocalId } from "./utils";
 import type { Msg, BroadcastResult } from "./types";
-import { generateTxt, sendTelegramFile } from "./generateFile";
+// import { generateTxt, sendTelegramFile } from "./generateFile";
 
 const results: BroadcastResult[] = [];
 let finalizeTimer: NodeJS.Timeout | null = null;
@@ -79,27 +79,27 @@ export async function startBroadcast(
 
   opts.onDone?.({ total });
 
-  finalizeTimer = setTimeout(async () => {
-    console.log("[FINALIZE] sending txt file...");
+  // finalizeTimer = setTimeout(async () => {
+  //   console.log("[FINALIZE] sending txt file...");
 
-    try {
-      if (!results.length) return;
+  //   try {
+  //     if (!results.length) return;
 
-      const { filename, filepath } = generateTxt(results);
+  //     const { filename, filepath } = generateTxt(results);
 
-      await sendTelegramFile(
-        process.env.TELEGRAM_BOT_TOKEN!,
-        process.env.TELEGRAM_CHAT_ID!,
-        filepath,
-        filename
-      );
-    } catch (e) {
-      console.error("❌ failed send telegram file", e);
-    } finally {
-      results.length = 0;
-      finalizeTimer = null;
-    }
-  }, 30_000); // ✅ 30 DETIK
+  //     await sendTelegramFile(
+  //       process.env.TELEGRAM_BOT_TOKEN!,
+  //       process.env.TELEGRAM_CHAT_ID!,
+  //       filepath,
+  //       filename
+  //     );
+  //   } catch (e) {
+  //     console.error("❌ failed send telegram file", e);
+  //   } finally {
+  //     results.length = 0;
+  //     finalizeTimer = null;
+  //   }
+  // }, 30_000); // ✅ 30 DETIK
 }
 
 export function markIncomingResponse(phone: string) {

@@ -61,7 +61,6 @@ export async function loadActiveRules(filePath = "rules.txt") {
   return RULES;
 }
 
-// ✅ NEW: load from rules.json (RulesStore)
 export async function loadActiveRulesFromStore(store: RulesStore) {
   const rules = await store.list(); // Rule[]
   const active: ActiveRule[] = rules.map((r: Rule) => ({

@@ -1,6 +1,3 @@
-2026/01/27-11:20:30.378 167b81 Reusing MANIFEST /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/Local Storage/leveldb/MANIFEST-000001
-2026/01/27-11:20:30.380 167b81 Recovering log #40
-2026/01/27-11:20:30.381 167b81 Reusing old log /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/Local Storage/leveldb/000040.log 
-2026/01/27-11:21:30.387 167b81 Level-0 table #45: started
-2026/01/27-11:21:30.391 167b81 Level-0 table #45: 11986 bytes OK
-2026/01/27-11:21:30.394 167b81 Delete type=0 #40
+2026/01/28-16:20:09.836 269242 Reusing MANIFEST /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/Local Storage/leveldb/MANIFEST-000001
+2026/01/28-16:20:09.838 269242 Recovering log #3
+2026/01/28-16:20:09.838 269242 Reusing old log /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/Local Storage/leveldb/000003.log 

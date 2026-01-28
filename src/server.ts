@@ -21,7 +21,6 @@ const rulesStore = new RulesStore("rules.json");
 app.use("/api/rules", createRulesRouter(rulesStore));
 
 /* ========== HTTP + WS ========== */
-// ✅ http baru: bisa nerima express app untuk /api/*
 const server = createHttpServer(app);
 
 let wa: ReturnType<typeof createWaManager>;

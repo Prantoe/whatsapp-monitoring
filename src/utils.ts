@@ -39,8 +39,6 @@ export function normalizeJidToPhone(jid: string) {
   return normalizePhone(digits);
 }
 
-
-
 export function formatResultLine(r: BroadcastResult): string {
   return (
     `numberPhone: '${r.phone}' | ` +

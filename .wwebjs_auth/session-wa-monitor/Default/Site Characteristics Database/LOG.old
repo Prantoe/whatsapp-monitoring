@@ -1,3 +1,2 @@
-2026/01/27-10:37:44.225 15f1da Reusing MANIFEST /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/Site Characteristics Database/MANIFEST-000001
-2026/01/27-10:37:44.226 15f1da Recovering log #3
-2026/01/27-10:37:44.226 15f1da Reusing old log /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/Site Characteristics Database/000003.log 
+2026/01/28-16:12:32.881 2652e9 Creating DB /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/Site Characteristics Database since it was missing.
+2026/01/28-16:12:32.885 2652e9 Reusing MANIFEST /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/Site Characteristics Database/MANIFEST-000001

@@ -1,3 +1,2 @@
-2026/01/27-10:37:44.221 15f1cb Reusing MANIFEST /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/Service Worker/Database/MANIFEST-000001
-2026/01/27-10:37:44.221 15f1cb Recovering log #3
-2026/01/27-10:37:44.223 15f1cb Reusing old log /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/Service Worker/Database/000003.log 
+2026/01/28-16:12:35.209 2652d7 Creating DB /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/Service Worker/Database since it was missing.
+2026/01/28-16:12:35.216 2652d7 Reusing MANIFEST /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/Service Worker/Database/MANIFEST-000001
