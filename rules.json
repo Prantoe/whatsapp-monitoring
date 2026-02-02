@@ -1,29 +1,36 @@
 {
   "rules": [
-    {
-      "phone": "628118414000",
-      "trigger": "produk",
-      "threshold": 11
-    },
-    {
-      "phone": "628121214017",
-      "trigger": "hi",
-      "threshold": 11
-    },
-    {
-      "phone": "6289652707354",
-      "trigger": "pranto soearno",
-      "threshold": 11
-    },
-    {
-      "phone": "6287743780265",
-      "trigger": "halo coy gausah bales ya oke",
-      "threshold": 11
-    },
-    {
-      "phone": "6287713763012",
-      "trigger": "jangan di balas",
-      "threshold": 11
-    }
+    { "phone": "628118414000", "trigger": "produk", "threshold": 11 },
+    { "phone": "628121214017", "trigger": "hi", "threshold": 11 },
+    { "phone": "6285208696969", "trigger": "menu", "threshold": 11 },
+    { "phone": "6281119126688", "trigger": "hi", "threshold": 11 },
+    { "phone": "6287801724687", "trigger": "reg", "threshold": 11 },
+    { "phone": "628111027780", "trigger": "menu", "threshold": 11 },
+    { "phone": "6289521500343", "trigger": "hi", "threshold": 11 },
+    { "phone": "6282289802000", "trigger": "hi", "threshold": 11 },
+    { "phone": "628111500315", "trigger": "produk", "threshold": 11 },
+    { "phone": "6281584114040", "trigger": "hi", "threshold": 11 },
+    { "phone": "628111002002", "trigger": "hi", "threshold": 11 },
+    { "phone": "6281586086801", "trigger": "hi", "threshold": 11 },
+    { "phone": "62818800055", "trigger": "hi", "threshold": 11 },
+    { "phone": "628170010820", "trigger": "hi", "threshold": 11 },
+    { "phone": "62818817838", "trigger": "hi", "threshold": 11 },
+    { "phone": "6285811500090", "trigger": "hi", "threshold": 15 },
+    { "phone": "62216505555", "trigger": "hi", "threshold": 11 },
+    { "phone": "62895381500898", "trigger": "hi", "threshold": 11 },
+    { "phone": "628111047781", "trigger": "hi", "threshold": 11 },
+    { "phone": "6281808816226", "trigger": "hi", "threshold": 11 },
+    { "phone": "6289651500898", "trigger": "ok", "threshold": 11 },
+    { "phone": "628812341088", "trigger": "hi", "threshold": 11 },
+    { "phone": "6281110686666", "trigger": "hi", "threshold": 11 },
+    { "phone": "6281901919333", "trigger": "hi", "threshold": 11 },
+    { "phone": "6281110150180", "trigger": "hi", "threshold": 15 },
+    { "phone": "6281197814041", "trigger": "hi", "threshold": 30 },
+    { "phone": "6285174438456", "trigger": "hi", "threshold": 11 },
+    { "phone": "6281220001263", "trigger": "hi", "threshold": 11 },
+    { "phone": "62818800088", "trigger": "hi", "threshold": 15 },
+    { "phone": "6281157157157", "trigger": "hi", "threshold": 11 },
+    { "phone": "6282139700039", "trigger": "hi", "threshold": 11 },
+    { "phone": "6281294698133", "trigger": "hi", "threshold": 11 }
   ]
 }

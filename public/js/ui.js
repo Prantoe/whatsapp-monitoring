@@ -60,7 +60,7 @@ export function hideLogout() {
 
 export function updateLogoutButton(state) {
   logoutBtn.disabled = state === "booting";
-  logoutBtn.textContent = logoutBtn.disabled ? "Logging out…" : "Logout";
+  logoutBtn.textContent = logoutBtn.disabled ? "Logging out…" : "⏻ Logout";
 }
 
 export function bindFullscreenHotkey() {

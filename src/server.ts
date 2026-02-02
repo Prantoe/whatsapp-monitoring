@@ -1,6 +1,7 @@
 // src/server.ts
 import "dotenv/config";
 import express from "express";
+import path from "path";
 
 import { PORT } from "./config";
 import { createHttpServer } from "./http";
@@ -15,6 +16,14 @@ import { createRulesRouter } from "./routes/rules";
 
 /* ========== API (Express) ========== */
 const app = express();
+
+const publicPath = path.join(__dirname, "../public");
+app.use(express.static(publicPath));
+
+app.get("/", (_req, res) => {
+  res.sendFile(path.join(publicPath, "index.html"));
+});
+
 app.use(express.json());
 
 const rulesStore = new RulesStore("rules.json");
@@ -88,6 +97,6 @@ process.on("uncaughtException", (e: any) => {
 
 /* ========== START ========== */
 server.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running:${PORT}`);
   void wa.restartClient(false);
 });

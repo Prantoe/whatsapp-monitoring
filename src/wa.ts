@@ -243,21 +243,31 @@ export function createWaManager(broadcast: Broadcast) {
     const state = slaMap.get(rulePhone);
     if (!state) return;
     if (state.replied) return;
-
+  
     state.replied = true;
     state.pendingNoReplyAt = undefined;
     state.lastInboundAt = inboundAt;
-
+  
     const gapSec = msToSec(inboundAt - state.sentAt);
-
+  
     log("INBOUND_REPLY", {
       phone: rulePhone,
       broadcastId: state.broadcastId,
       gapSec,
       thresholdSec: state.thresholdSec,
     });
-
-    if (gapSec > state.thresholdSec && !state.alertedLate) {
+  
+    if (gapSec <= state.thresholdSec) {
+      // 🟢 FIX DI SINI
+      broadcast("set_col_status", {
+        clientId: state.clientId,
+        status: "green",
+      });
+      return;
+    }
+  
+    // telat tapi dibalas
+    if (!state.alertedLate) {
       state.alertedLate = true;
       log("BREACH_LATE_REPLY", {
         phone: rulePhone,
@@ -268,6 +278,7 @@ export function createWaManager(broadcast: Broadcast) {
       emitAlertLate(state, gapSec);
     }
   }
+  
 
   function startSlaNoReplyChecker() {
     if (slaTimer) clearInterval(slaTimer);

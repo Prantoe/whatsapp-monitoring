@@ -85,14 +85,10 @@ function markSeedDirty() {
 ws.onmessage = async (ev) => {
   const { type, data } = JSON.parse(ev.data);
 
-  // NOTE: ini event bisa spam (per rule), jadi jangan heavy work tiap event.
   if (type === "rule_seed") {
-    console.log("[ui] rule_seed", data);
     cols.ensureCol(data.clientId, data.clientLabel, data.clientPhone || "", { seeded: true });
-
-    cols.sortColumns();
-    applySearch(columnsEl, searchInput.value || "");
-    refreshActionsVisibility();
+    cols.setColStatus(data.clientId, "yellow");
+    markSeedDirty();
     return;
   }
 
@@ -100,38 +96,40 @@ ws.onmessage = async (ev) => {
     cols.renameCol?.(data.clientId, data.label);
     return;
   }
-  
+
+  if (type === "set_col_status") {
+    if (data.status !== "red") {
+      cols.clearSlaAlert?.(data.clientId);
+    }
+    cols.setColStatus(data.clientId, data.status);
+    return;
+  }
   
 
   switch (type) {
     case "status":
       onStatus(data);
       return;
-
     case "alert":
       onAlert(data);
       return;
-
     case "qr":
       await onQr(data);
       return;
-
     case "message":
       onMessage(data);
       return;
-
     case "messages":
       onMessages(data);
       return;
-
     case "cleared":
       onCleared(data);
       return;
-
     default:
       return;
   }
 };
+
 
 /* ================== WS HANDLERS ================== */
 function onStatus(data) {
@@ -163,7 +161,7 @@ function onAlert(data) {
   cols.markSlaAlert(
     data.clientId,
     data.reason === "NO_RESPONSE"
-      ? "No response (SLA breached)"
+      ? "No response"
       : `Late response (${Math.round(data.gap)}s > ${data.threshold}s)`
   );
 }

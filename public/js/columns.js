@@ -28,7 +28,8 @@ export function createColumns(columnsEl) {
     const key = String(clientId || "").trim();
     if (!key) return null;
 
-    if (colMap.has(key)) return { list: colMap.get(key), card: getCardByKey(key) };
+    if (colMap.has(key))
+      return { list: colMap.get(key), card: getCardByKey(key) };
 
     const card = document.createElement("div");
     card.className = "colcard";
@@ -39,16 +40,29 @@ export function createColumns(columnsEl) {
     card.innerHTML = `
       <div class="col-head">
         <div class="col-title">
-          <h4>${esc(label || key)}</h4>
-          ${phone ? `<div class="subtitle"><code>${esc(phone)}</code></div>` : ""}
+        <div class="wa-title">
+                <span class="wa-dot wa-dot--unknown"></span>
+                <h4>${esc(label || key)}</h4>
+              </div>          ${
+                phone
+                  ? `<div class="subtitle"><code>${esc(phone)}</code></div>`
+                  : ""
+              }
         </div>
         <div class="col-actions">
           <a class="btn btn-export btn-ghost btn-mini"
              href="export.csv?client=${encodeURIComponent(key)}"
              download>Export</a>
-          <button class="btn btn-ghost btn-mini clear-col" data-clientid="${esc(key)}">Clear</button>
+          <button class="btn btn-ghost btn-mini clear-col" data-clientid="${esc(
+            key
+          )}">Clear</button>
         </div>
       </div>
+
+<div class="col-activity hidden">
+  <div class="last-out">Last out: —</div>
+  <div class="last-in">Last in: —</div>
+</div>
 
       <div class="list"></div>
 
@@ -142,14 +156,14 @@ export function createColumns(columnsEl) {
     div.className = `msg msg--${dir}`;
     div.dataset.search = buildMsgIndex(m);
 
-    div.innerHTML = `
-      <div class="msg__bubble">
-        <div class="msg__meta"><span class="ts">${d.toLocaleString("id-ID")}</span></div>
-        <div class="sender">${esc(m.name || "")}</div>
-        <div class="body">${esc(m.body || "").replace(/\n/g, "<br>")}</div>
-        <button type="button" class="readmore hidden" aria-expanded="false">Baca lengkap</button>
-      </div>
-    `;
+    // div.innerHTML = `
+    //   <div class="msg__bubble">
+    //     <div class="msg__meta"><span class="ts">${d.toLocaleString("id-ID")}</span></div>
+    //     <div class="sender">${esc(m.name || "")}</div>
+    //     <div class="body">${esc(m.body || "").replace(/\n/g, "<br>")}</div>
+    //     <button type="button" class="readmore hidden" aria-expanded="false">Baca lengkap</button>
+    //   </div>
+    // `;
 
     list.prepend(div);
     setupClamp(div);
@@ -162,6 +176,7 @@ export function createColumns(columnsEl) {
       const hit = s.includes(q) || (qDigits && s.includes(qDigits));
       div.classList.toggle("hidden-search", !hit);
     }
+    updateActivity(id, dir === "out" ? "out" : "in", ts);
 
     updateEmptyState(list);
   }
@@ -198,6 +213,7 @@ export function createColumns(columnsEl) {
     sticky.classList.remove("hidden");
     sticky.classList.add("sla");
     stat.innerHTML = `⚠ ${esc(reason)}`;
+    setColStatus(clientId, "red");
   }
 
   function clearSlaAlert(clientId) {
@@ -220,20 +236,68 @@ export function createColumns(columnsEl) {
     const card = list?.closest(".colcard");
     const h4 = card?.querySelector("h4");
     if (!h4 || !label) return;
-  
+
     h4.textContent = label;
+  }
+
+  function setColStatus(clientId, status) {
+    const list = colMap.get(String(clientId));
+    const dot = list?.closest(".colcard")?.querySelector(".wa-dot");
+    if (!dot) return;
+
+    console.log("[setColStatus]", clientId, status); // 👈 cek ini
+
+    dot.className = "wa-dot"; // reset dulu
+    dot.classList.add(`wa-dot--${status}`);
+  }
+
+  const lastActivity = new Map(); // clientId -> { in?: ts, out?: ts }
+
+  function updateActivity(clientId, dir, ts) {
+    const card = getCardByKey(clientId);
+    if (!card) return;
+  
+    const act = lastActivity.get(clientId) || {};
+    act[dir] = ts;
+    lastActivity.set(clientId, act);
+  
+    const box = card.querySelector(".col-activity");
+    if (!box) return;
+  
+    box.classList.remove("hidden");
+  
+    const outEl = box.querySelector(".last-out");
+    const inEl  = box.querySelector(".last-in");
+    if (!outEl || !inEl) return;
+  
+    const fmt = (t) =>
+      new Date(t).toLocaleTimeString("id-ID", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      });
+  
+    outEl.textContent = act.out
+      ? `Last outbound: ${fmt(act.out)}`
+      : "Last outbound: —";
+  
+    inEl.textContent = act.in
+      ? `Last inbound : ${fmt(act.in)}`
+      : "Last inbound : —";
   }
   
 
   return {
     colMap,
-    ensureCol, // ensureCol(id,label,phone,{seeded:true})
+    ensureCol,
     renderMsgIntoColumn,
     sortColumns,
     removeColumnById,
     updateEmptyState,
     markSlaAlert,
     clearSlaAlert,
-    renameCol
+    renameCol,
+    setColStatus,
+    updateActivity,
   };
 }

@@ -1,2 +1,3 @@
-2026/01/28-16:12:39.773 2652d8 Creating DB /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/GCM Store since it was missing.
-2026/01/28-16:12:39.782 2652d8 Reusing MANIFEST /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/GCM Store/MANIFEST-000001
+2026/02/01-20:00:09.778 4e78cc Reusing MANIFEST /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/GCM Store/MANIFEST-000001
+2026/02/01-20:00:09.787 4e78cc Recovering log #3
+2026/02/01-20:00:09.790 4e78cc Reusing old log /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/GCM Store/000003.log 

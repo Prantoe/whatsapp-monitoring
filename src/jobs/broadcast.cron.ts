@@ -8,6 +8,5 @@ export function startBroadcastCron(run: () => Promise<void>) {
     } catch (e) {
       console.error("[cron] broadcast failed", e);
     }
-  });
-  
+  });  
 }
