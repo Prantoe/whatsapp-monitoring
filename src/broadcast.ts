@@ -19,6 +19,8 @@ type Opts = {
   onDone?: (x: { total: number }) => void;
 };
 
+const sleep = (ms: number) => new Promise(res => setTimeout(res, ms));
+
 export async function startBroadcast(
   client: any,
   broadcast: BroadcastFn,
@@ -30,7 +32,8 @@ export async function startBroadcast(
   results.length = 0;
   if (finalizeTimer) clearTimeout(finalizeTimer);
 
-  for (const r of rules) {
+  for (let i = 0; i < rules.length; i++) {
+    const r = rules[i];
     const phone = r.phone;
     const canonicalChatId = `${phone}@c.us`;
     const sentAt = Date.now();
@@ -39,9 +42,9 @@ export async function startBroadcast(
 
     const peerId = String(
       msg?.to ||
-        msg?.id?.remote ||
-        msg?.id?._serialized ||
-        canonicalChatId
+      msg?.id?.remote ||
+      msg?.id?._serialized ||
+      canonicalChatId
     );
 
     const outMsg: Msg = {
@@ -59,7 +62,7 @@ export async function startBroadcast(
 
     results.push({
       phone,
-      name: "-", // optional
+      name: "-",
       messageText: r.trigger,
       threshold: r.threshold,
       timeSendMessage: new Date(sentAt),
@@ -75,41 +78,24 @@ export async function startBroadcast(
     });
 
     total++;
+
+    if (i < rules.length - 1) {
+      await sleep(3000);
+    }
   }
 
   opts.onDone?.({ total });
-
-  // finalizeTimer = setTimeout(async () => {
-  //   console.log("[FINALIZE] sending txt file...");
-
-  //   try {
-  //     if (!results.length) return;
-
-  //     const { filename, filepath } = generateTxt(results);
-
-  //     await sendTelegramFile(
-  //       process.env.TELEGRAM_BOT_TOKEN!,
-  //       process.env.TELEGRAM_CHAT_ID!,
-  //       filepath,
-  //       filename
-  //     );
-  //   } catch (e) {
-  //     console.error("❌ failed send telegram file", e);
-  //   } finally {
-  //     results.length = 0;
-  //     finalizeTimer = null;
-  //   }
-  // }, 30_000); // ✅ 30 DETIK
 }
 
-export function markIncomingResponse(phone: string) {
-  const item = results.find(
-    (x) => x.phone === phone && x.timeOfReceiving === null
-  );
-  if (!item) return;
 
-  const recvAt = new Date();
-  item.timeOfReceiving = recvAt;
-  item.responseTime =
-    (recvAt.getTime() - item.timeSendMessage.getTime()) / 1000;
-}
+// export function markIncomingResponse(phone: string) {
+//   const item = results.find(
+//     (x) => x.phone === phone && x.timeOfReceiving === null
+//   );
+//   if (!item) return;
+
+//   const recvAt = new Date();
+//   item.timeOfReceiving = recvAt;
+//   item.responseTime =
+//     (recvAt.getTime() - item.timeSendMessage.getTime()) / 1000;
+// }

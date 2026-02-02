@@ -11,7 +11,7 @@ import {
 import { store } from "./store";
 import { resolvePeer, toLocalId, normalizePhone } from "./utils";
 import type { Msg } from "./types";
-import { markIncomingResponse, startBroadcast } from "./broadcast";
+import {  startBroadcast } from "./broadcast";
 import { sendTelegramAlert } from "./telegram";
 import { loadActiveRulesFromStore } from "./activeRules";
 import { RulesStore } from "./rulesStore";
@@ -487,7 +487,7 @@ export function createWaManager(broadcast: Broadcast) {
       onInboundReply(rulePhone, inboundAt);
 
       // ✅ NEW (REPORTING logic)
-      markIncomingResponse(rulePhone);
+      // markIncomingResponse(rulePhone);
 
       await pushAndBroadcastAsRule(msg, "in", rulePhone, String(peerId));
     });
@@ -547,66 +547,156 @@ export function createWaManager(broadcast: Broadcast) {
     } catch {}
   }
 
+  // async function startBroadcastNow() {
+  //   const broadcastId = makeBroadcastId();
+  //   slaMap.clear();
+  //   sentAlerts.clear();
+  //   await loadActiveRulesFromStore(rulesStore);
+
+  //   log("BROADCAST_START", { broadcastId });
+
+  //   const REPORT_DELAY_MS = 30 * 1000; // 30 detik
+
+  //   setTimeout(async () => {
+  //     try {
+  //       const allResults = Array.from(slaMap.values()).map((s) => ({
+  //         phone: s.phone,
+  //         name: labelByPhone.get(s.phone),
+  //         messageText: "-", // trigger text kalau mau
+  //         timeSendMessage: new Date(s.sentAt),
+  //         timeOfReceiving: s.lastInboundAt
+  //           ? new Date(s.lastInboundAt)
+  //           : null,
+  //         responseTime: s.lastInboundAt
+  //           ? (s.lastInboundAt - s.sentAt) / 1000
+  //           : null,
+  //         threshold: s.thresholdSec,
+  //       }));
+
+  //       const { filepath, filename } = generateTxt(allResults);
+
+  //       await sendTelegramFile(
+  //         process.env.TELEGRAM_BOT_TOKEN!,
+  //         process.env.TELEGRAM_CHAT_ID!,
+  //         filepath,
+  //         filename
+  //       );
+
+  //       console.log("✅ SLA TXT sent");
+  //     } catch (e) {
+  //       console.error("❌ failed send SLA TXT", e);
+  //     }
+  //   }, REPORT_DELAY_MS);
+
+
+  //   const runOnce = async () => {
+  //     await patchSendSeen();
+
+  //     await startBroadcast(client, broadcast, {
+  //       broadcastId,
+  //       onSent: (x) => {
+  //         trackBroadcastSent({
+  //           phone: x.phone,
+  //           thresholdSec: x.thresholdSec,
+  //           broadcastId,
+  //           sentAt: x.sentAt,
+  //           peerId: x.peerId, // ✅ from broadcast.ts
+  //         });
+  //       },
+  //       onDone: (x) => log("BROADCAST_DONE", { broadcastId, total: x.total }),
+  //     });
+  //   };
+
+  //   try {
+  //     await runOnce();
+  //   } catch (e: any) {
+  //     if (isPuppeteerFlake(e)) {
+  //       console.warn("[broadcast] flake, restarting client then retry…", e?.message || e);
+  //       await restartClient(false);
+  //       await runOnce();
+  //       return;
+  //     }
+  //     console.error("[broadcast] failed:", e?.message || e);
+  //     throw e;
+  //   }
+  // }
+
   async function startBroadcastNow() {
     const broadcastId = makeBroadcastId();
     slaMap.clear();
     sentAlerts.clear();
     await loadActiveRulesFromStore(rulesStore);
-
+  
     log("BROADCAST_START", { broadcastId });
-
-    const REPORT_DELAY_MS = 30 * 1000; // 30 detik
-
-    setTimeout(async () => {
-      try {
-        const allResults = Array.from(slaMap.values()).map((s) => ({
-          phone: s.phone,
-          name: labelByPhone.get(s.phone),
-          messageText: "-", // trigger text kalau mau
-          timeSendMessage: new Date(s.sentAt),
-          timeOfReceiving: s.lastInboundAt
-            ? new Date(s.lastInboundAt)
-            : null,
-          responseTime: s.lastInboundAt
-            ? (s.lastInboundAt - s.sentAt) / 1000
-            : null,
-          threshold: s.thresholdSec,
-        }));
-
-        const { filepath, filename } = generateTxt(allResults);
-
-        await sendTelegramFile(
-          process.env.TELEGRAM_BOT_TOKEN!,
-          process.env.TELEGRAM_CHAT_ID!,
-          filepath,
-          filename
-        );
-
-        console.log("✅ SLA TXT sent");
-      } catch (e) {
-        console.error("❌ failed send SLA TXT", e);
-      }
-    }, REPORT_DELAY_MS);
-
-
+  
+    const REPORT_DELAY_MS = 30 * 1000;
+    let latestReportAt = 0;
+    let finalReportTimer: NodeJS.Timeout | null = null;
+  
+    const scheduleFinalReport = () => {
+      if (finalReportTimer) clearTimeout(finalReportTimer);
+  
+      const delay = Math.max(0, latestReportAt - Date.now());
+  
+      finalReportTimer = setTimeout(async () => {
+        try {
+          const allResults = Array.from(slaMap.values()).map((s) => ({
+            phone: s.phone,
+            name: labelByPhone.get(s.phone),
+            messageText: "-",
+            timeSendMessage: new Date(s.sentAt),
+            timeOfReceiving: s.lastInboundAt
+              ? new Date(s.lastInboundAt)
+              : null,
+            responseTime: s.lastInboundAt
+              ? (s.lastInboundAt - s.sentAt) / 1000
+              : null,
+            threshold: s.thresholdSec,
+          }));
+  
+          const { filepath, filename } = generateTxt(allResults);
+  
+          await sendTelegramFile(
+            process.env.TELEGRAM_BOT_TOKEN!,
+            process.env.TELEGRAM_CHAT_ID!,
+            filepath,
+            filename
+          );
+  
+          console.log("✅ SLA TXT sent (final)");
+        } catch (e) {
+          console.error("❌ failed send SLA TXT", e);
+        }
+      }, delay);
+    };
+  
     const runOnce = async () => {
       await patchSendSeen();
-
+  
       await startBroadcast(client, broadcast, {
         broadcastId,
+  
         onSent: (x) => {
           trackBroadcastSent({
             phone: x.phone,
             thresholdSec: x.thresholdSec,
             broadcastId,
             sentAt: x.sentAt,
-            peerId: x.peerId, // ✅ from broadcast.ts
+            peerId: x.peerId,
           });
+  
+          const reportAt = x.sentAt + REPORT_DELAY_MS;
+          if (reportAt > latestReportAt) {
+            latestReportAt = reportAt;
+            scheduleFinalReport();
+          }
         },
-        onDone: (x) => log("BROADCAST_DONE", { broadcastId, total: x.total }),
+  
+        onDone: (x) =>
+          log("BROADCAST_DONE", { broadcastId, total: x.total }),
       });
     };
-
+  
     try {
       await runOnce();
     } catch (e: any) {
@@ -620,6 +710,7 @@ export function createWaManager(broadcast: Broadcast) {
       throw e;
     }
   }
+  
 
   return {
     restartClient,

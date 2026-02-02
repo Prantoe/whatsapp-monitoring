@@ -1,19 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.startBroadcast = startBroadcast;
-exports.markIncomingResponse = markIncomingResponse;
 const activeRules_1 = require("./activeRules");
 const utils_1 = require("./utils");
 // import { generateTxt, sendTelegramFile } from "./generateFile";
 const results = [];
 let finalizeTimer = null;
+const sleep = (ms) => new Promise(res => setTimeout(res, ms));
 async function startBroadcast(client, broadcast, opts) {
     const rules = (0, activeRules_1.getRules)();
     let total = 0;
     results.length = 0;
     if (finalizeTimer)
         clearTimeout(finalizeTimer);
-    for (const r of rules) {
+    for (let i = 0; i < rules.length; i++) {
+        const r = rules[i];
         const phone = r.phone;
         const canonicalChatId = `${phone}@c.us`;
         const sentAt = Date.now();
@@ -35,7 +36,7 @@ async function startBroadcast(client, broadcast, opts) {
         broadcast("message", outMsg);
         results.push({
             phone,
-            name: "-", // optional
+            name: "-",
             messageText: r.trigger,
             threshold: r.threshold,
             timeSendMessage: new Date(sentAt),
@@ -49,33 +50,19 @@ async function startBroadcast(client, broadcast, opts) {
             peerId,
         });
         total++;
+        if (i < rules.length - 1) {
+            await sleep(3000);
+        }
     }
     opts.onDone?.({ total });
-    // finalizeTimer = setTimeout(async () => {
-    //   console.log("[FINALIZE] sending txt file...");
-    //   try {
-    //     if (!results.length) return;
-    //     const { filename, filepath } = generateTxt(results);
-    //     await sendTelegramFile(
-    //       process.env.TELEGRAM_BOT_TOKEN!,
-    //       process.env.TELEGRAM_CHAT_ID!,
-    //       filepath,
-    //       filename
-    //     );
-    //   } catch (e) {
-    //     console.error("❌ failed send telegram file", e);
-    //   } finally {
-    //     results.length = 0;
-    //     finalizeTimer = null;
-    //   }
-    // }, 30_000); // ✅ 30 DETIK
 }
-function markIncomingResponse(phone) {
-    const item = results.find((x) => x.phone === phone && x.timeOfReceiving === null);
-    if (!item)
-        return;
-    const recvAt = new Date();
-    item.timeOfReceiving = recvAt;
-    item.responseTime =
-        (recvAt.getTime() - item.timeSendMessage.getTime()) / 1000;
-}
+// export function markIncomingResponse(phone: string) {
+//   const item = results.find(
+//     (x) => x.phone === phone && x.timeOfReceiving === null
+//   );
+//   if (!item) return;
+//   const recvAt = new Date();
+//   item.timeOfReceiving = recvAt;
+//   item.responseTime =
+//     (recvAt.getTime() - item.timeSendMessage.getTime()) / 1000;
+// }

@@ -1,3 +1,2 @@
-2026/02/01-20:00:04.405 4e78d5 Reusing MANIFEST /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/shared_proto_db/MANIFEST-000001
-2026/02/01-20:00:04.405 4e78d5 Recovering log #3
-2026/02/01-20:00:04.405 4e78d5 Reusing old log /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/shared_proto_db/000003.log 
+2026/02/02-10:33:28.982 521489 Creating DB /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/shared_proto_db since it was missing.
+2026/02/02-10:33:28.987 521489 Reusing MANIFEST /Users/macbookpro/inmotion/whatsapp-monitor/.wwebjs_auth/session-wa-monitor/Default/shared_proto_db/MANIFEST-000001
